@@ -11,15 +11,29 @@
  */
 class Solution {
 public:
-    int cnt = 0;
-    void traversal(TreeNode* root) {
-        if (root == nullptr) return;
-        cnt++;
-        traversal(root->left);
-        traversal(root->right);
+    int lefth(TreeNode* root){
+        if(root==NULL) return 0;
+        int h=0;
+        while(root){
+            root=root->left;
+            h++;
+        }
+        return h;
+    }
+    int righth(TreeNode* root){
+        if(root==NULL) return 0;
+        int h=0;
+        while(root){
+            root=root->right;
+            h++;
+        }
+        return h;
     }
     int countNodes(TreeNode* root) {
-        traversal(root);
-        return cnt;
+        if(root==NULL) return 0;
+        int lh=lefth(root);
+        int rh=righth(root);
+        if(lh==rh) return (1<<lh)-1;
+        return 1+countNodes(root->left)+countNodes(root->right);
     }
 };

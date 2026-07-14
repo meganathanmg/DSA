@@ -2,12 +2,14 @@ class Solution {
 public:
     int hIndex(vector<int>& citations) {
         int n = citations.size();
-        sort(citations.begin(), citations.end());
-
-        for (int i = 0; i < n; i++) {
-            if (citations[i] >= n - i) {
-                return n - i;
-            }
+        vector<int>citationbuckets(n+1,0);
+        for(int c:citations){
+            citationbuckets[min(c,n)]++;
+        }
+        int sum=0;
+        for(int i=n;i>=0;i--){
+            sum+=citationbuckets[i];
+            if(sum>=i) return i;
         }
         return 0;
     }
